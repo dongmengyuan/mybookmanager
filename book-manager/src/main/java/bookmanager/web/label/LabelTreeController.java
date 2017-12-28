@@ -1,0 +1,69 @@
+package bookmanager.web.label;
+
+/**
+ * @Author: spider_hgyi
+ * @Date: Created in 下午1:36 17-11-20.
+ * @Modified By:
+ * @Description:
+ */
+//@Controller
+//@RequestMapping("/")
+//public class LabelTreeController {
+//    private BookLabelService bookLabelRepository;
+//    private CsUserService csUserRepository;
+//
+//    @Autowired
+//    public LabelTreeController(BookLabelService bookLabelRepository,
+//                               CsUserService csUserRepository) {
+//        this.bookLabelRepository = bookLabelRepository;
+//        this.csUserRepository = csUserRepository;
+//    }
+//
+//    @RequestMapping(value = "/label", method = RequestMethod.GET)
+//    public String showLabel(Model model) {
+//        List<BookLabelPO> parentLabels = bookLabelRepository.getParentLabelsByParentId(0);
+//        List<BookLabelPO> childrenLabels = bookLabelRepository.getChildrenLabelsNyByParentId(0);
+//        Map<String, List<String>> labelsName = new HashMap<String, List<String>>();
+//
+//        // 时间复杂度高
+//        for (BookLabelPO parentLabel : parentLabels) {
+//            List<String> childLabelsName = new ArrayList<String>();
+//            for (BookLabelPO childrenLabel : childrenLabels) {
+//                if (parentLabel.getPkId() == childrenLabel.getParentId()) {
+//                    childLabelsName.add(childrenLabel.getName());
+//                }
+//            }
+//            labelsName.put(parentLabel.getName(), childLabelsName);
+//        }
+//
+//        // 将存储父子标签的Map对象添加进model对象
+//        model.addAttribute("labelsName", labelsName);
+//
+//        return "label";
+//    }
+//
+//    /**
+//     * @param:
+//     * @return:
+//     * @Description: 添加标签功能所对应的控制器
+//     */
+//    @RequestMapping(value = "/label", method = RequestMethod.POST)
+//    public String addLabel(AddLabelVO addLabel) {
+//        int uid = addLabel.getUid();
+//        PrivilegePO privilege = csUserRepository.getPrivilegeByUid(uid);
+//
+//        // 只有管理者才能添加标签
+//        if (privilege.getPrivilege() == 1) {
+//            String parentLabelName = addLabel.getParentName();
+//            String childLabelName = addLabel.getChildName();
+//            int parentLabelId = bookLabelRepository.getParentLabelIdByParentLabelName(parentLabelName)
+//                    .getPkId();
+//            BookLabelPO label = new BookLabelPO(childLabelName, parentLabelId);
+//            bookLabelRepository.insertNewLabel(label);
+//        } else {
+//            // 提示用户无添加标签的权限
+//        }
+//
+//        return "label";
+//    }
+//}
