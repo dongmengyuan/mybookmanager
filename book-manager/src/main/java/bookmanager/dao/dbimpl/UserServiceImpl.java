@@ -1,12 +1,14 @@
 package bookmanager.dao.dbimpl;
 
 import bookmanager.dao.dbservice.UserService;
-import bookmanager.dao.rowmapper.JdbcRowMapper;
 import bookmanager.model.po.UserPO;
 import bookmanager.model.vo.login.UserLoginVO;
+import bookmanager.dao.rowmapper.JdbcRowMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcOperations;
 import org.springframework.stereotype.Repository;
+
+import java.util.List;
 
 /**
  * Created by dela on 11/23/17.

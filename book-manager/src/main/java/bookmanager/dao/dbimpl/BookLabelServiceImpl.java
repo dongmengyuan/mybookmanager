@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcOperations;
 import org.springframework.stereotype.Repository;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -16,6 +17,7 @@ import java.util.List;
 @Repository
 public class BookLabelServiceImpl implements BookLabelService {
     private JdbcOperations jdbcOperations;
+    public static volatile List<BookLabelPO> bookLabeList = null;
 
     private static final String GET_BOOKLABEL_BY_ID = "SELECT * FROM book_label where parent_id = ?";
 
@@ -25,6 +27,15 @@ public class BookLabelServiceImpl implements BookLabelService {
     }
 
     public List<BookLabelPO> getBookLabelById(int id) {
-        return jdbcOperations.query(GET_BOOKLABEL_BY_ID, JdbcRowMapper.newInstance(BookLabelPO.class), id);
+        bookLabeList = jdbcOperations.query(GET_BOOKLABEL_BY_ID, JdbcRowMapper.newInstance(BookLabelPO.class), id);
+        return bookLabeList;
+    }
+
+    public List<BookLabelPO> getBaseLabel() {
+        if (bookLabeList == null) {
+            bookLabeList = getBookLabelById(0);
+        }
+
+        return bookLabeList;
     }
 }

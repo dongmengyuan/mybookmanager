@@ -1,5 +1,20 @@
 package bookmanager.web.label;
 
+import bookmanager.dao.dbservice.BookLabelService;
+import bookmanager.model.po.BookLabelPO;
+import bookmanager.model.vo.label.AddLabelVO;
+import org.springframework.beans.factory.annotation.Autowired;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 /**
  * @Author: spider_hgyi
  * @Date: Created in 下午1:36 17-11-20.

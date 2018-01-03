@@ -9,4 +9,5 @@ import java.util.List;
  */
 public interface BookLabelService {
     List<BookLabelPO> getBookLabelById(int id);
+    List<BookLabelPO> getBaseLabel();
 }

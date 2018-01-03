@@ -4,6 +4,8 @@ package bookmanager.model.po;
 import bookmanager.annotation.Column;
 import bookmanager.annotation.Table;
 
+import java.util.Date;
+
 /**
  * Created by dela on 11/22/17.
  */

@@ -22,7 +22,7 @@ public class LoginFilter extends OncePerRequestFilter {
 
         String LOGIN_PAGE = "index.jsp"; //未登录首页
         String uri = httpServletRequest.getRequestURI(); // 请求的URI
-        String[] notFilterUri = {"/bookmanager", "index.jsp", "img", "js", "css", "login", "font-awesome-4.7.0"}; // 不过滤的URI数组
+        String[] notFilterUri = {"/bookmanager", "label", "img", "js", "css", "login", "font-awesome-4.7.0"}; // 不过滤的URI数组
         boolean doFilter = true; // 是否过滤的标志
         Object session = null;
 

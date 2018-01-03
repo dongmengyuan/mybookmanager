@@ -47,7 +47,7 @@
                             <p>${book.key.describ}</p>
                             <p><span><i class="fa fa-user"></i>${book.value}</span>
                                 <span><i class="fa fa-book"></i>${book.key.amount}本</span>
-                                <span><i class="fa fa-clock-o"></i>${book.key.uploadDate}</span>
+                                <span><i class="fa  fa-clock-o"></i>${book.key.uploadDate}</span>
                             </p>
                         </div>
                         <div style="clear:both"></div>
@@ -57,7 +57,70 @@
 
                 <div id="index_pingination">
                     <ul class="pagination">
-                       
+                        <%--<c:if test="${pageInfo.currentPage == 1}">--%>
+                           <%--<li class="pa_in"><a href="#">${pageInfo.currentPage}</a></li>--%>
+                        <%--</c:if>--%>
+
+                        <%--// 当当前页面不是第一页的时候, 要显示"首页"和"<<"按钮--%>
+                        <c:if test="${pageInfo.currentPage != 1}">
+                            <li><a href="/bookmanager/1">首页</a></li>
+                            <li><a href="/bookmanager/${pageInfo.currentPage-1}">&laquo;</a></li>
+                        </c:if>
+
+                        <%--&lt;%&ndash;// 当当前页面小于5页的时候, 只显示到当前页码 &ndash;%&gt;--%>
+                        <%--<c:if test="${pageInfo.totalPage < 5}">--%>
+                            <%--<c:forEach var="i" begin="${1}" end="${pageInfo.currentPage-1}">--%>
+                                <%--<li><a href="/bookmanager/${i}">${i}</a></li>--%>
+                                <%--<c:out value="${i}" />--%>
+                            <%--</c:forEach>--%>
+
+                            <%--&lt;%&ndash;// 遍历到当前页显示选中效果&ndash;%&gt;--%>
+                            <%--<li class="pa_in"><a href="#">${pageInfo.currentPage}</a></li>--%>
+                            <%--<c:forEach var="j" begin="${pageInfo.currentPage+1}" end="${(pageInfo.currentPage-1)/5*5+5}">--%>
+                                <%--<li><a href="/bookmanager/${j}">${j}</a></li>--%>
+                            <%--</c:forEach>--%>
+                        <%--</c:if>--%>
+
+                        <%--// 当当前页面大于6页的时候, 要显示"[...]"按钮--%>
+                        <c:if test="${pageInfo.currentPage > 6}">
+                            <li><a href="/bookmanager/${(pageInfo.currentPage/5-1)*5-1}">[...]</a></li>
+                        </c:if>
+
+                        <%--// 从当前这个五页起始页开始遍历--%>
+                        <c:forEach varStatus="i" begin="${(pageInfo.currentPage-1)/5*5+1}" end="${(pageInfo.currentPage-1)/5*5+5}">
+
+                            <c:if test="${i.count <= pageInfo.totalPage}">
+                                <c:if test="${i.count == pageInfo.currentPage}">
+                                    <li class="pa_in"><a href="#">${pageInfo.currentPage}</a></li>
+                                </c:if>
+                                <c:if test="${i.count != pageInfo.currentPage}">
+                                    <li><a href="/bookmanager/${i.count}">${i.count}</a></li>
+                                </c:if>
+                            </c:if>
+
+                            <%--<c:choose>--%>
+                                <%--<c:when test="${i.count == pageInfo.currentPage}">--%>
+                                    <%--<li class="pa_in"><a href="#">${pageInfo.currentPage}</a></li>--%>
+                                <%--</c:when>--%>
+                                <%--<c:when test="${i.count <= pageInfo.totalPage}">--%>
+                                    <%--<li><a href="/bookmanager/${i.count}">${i.count}</a></li>--%>
+                                <%--</c:when>--%>
+                            <%--</c:choose>--%>
+
+                        </c:forEach>
+
+                        <%--// 如果不是最后一个五页的页码, 要在后面显示[...]按钮--%>
+                        <c:if test="${((pageInfo.currentPage-1)/5*5+1 != (pageInfo.totalPage-1)/5*5+1) && pageInfo.totalPage > 6}">
+                            <li><a href="/bookmanager/${(pageInfo.currentPage+4)/5*5+1}">[...]</a></li>
+                        </c:if>
+
+
+                        <%--// 如果不是尾页, 要显示">>"和"尾页"按钮--%>
+                        <c:if test="${pageInfo.currentPage != pageInfo.totalPage && pageInfo.totalPage != 1}">
+                            <li><a href="/bookmanager/${pageInfo.currentPage+1}">&raquo;</a></li>
+                            <li><a href="/bookmanager/${pageInfo.totalPage}">尾页</a></li>
+                        </c:if>
+
                     </ul>
                 </div>
                 
@@ -65,7 +128,7 @@
                 <%--<div id="index_pingination">--%>
                     <%--<ul class="pagination">--%>
                         <%--<li><a href="#">&laquo;</a></li>--%>
-                        <%--<li class="pa_in"><a href="#">1</a></li>--%>
+                        <%--<li class="pa_in"><a href="#">${pageInfo.currentPage}</a></li>--%>
                         <%--<li><a href="#">2</a></li>--%>
                         <%--<li><a href="#">3</a></li>--%>
                         <%--<li><a href="#">4</a></li>--%>
@@ -73,7 +136,7 @@
                         <%--<li><a href="#">&raquo;</a></li>--%>
                     <%--</ul>--%>
                 <%--</div>--%>
-                
+                <%----%>
                 
                 
             </div>

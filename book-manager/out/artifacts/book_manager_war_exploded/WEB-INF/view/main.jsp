@@ -60,6 +60,9 @@
                                 <span><i class="fa fa-clock-o"></i>2017/12/5/21:04</span>
                             </p>
                         </div>
+                        <div class="col-xs-12 col-md-2">
+                            <button class="btn" href="showbook.html">点我借阅</button>
+                        </div>
                         <div style="clear:both"></div>
                     </div>
                     <div class="rows">

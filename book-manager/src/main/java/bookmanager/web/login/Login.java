@@ -33,7 +33,7 @@ public class Login {
     // 当URL为/login且请求类型为GET的时候, 默认返回index.jsp页面(即未登录主页面)
     @RequestMapping(method = RequestMethod.GET)
     public String showMainPage() {
-        return "redirect:startindex.jsp";
+        return "index";
     }
 
     // 当URL为/login且请求类型为POST的时候, 处理用户登录表单
@@ -51,10 +51,10 @@ public class Login {
                 return "main";
             } else {
                 // 若不成功, 则带上错误参数返回index.jsp页面(未登录前首页)
-                return "redirect:startindex.jsp?error=yes";
+                return "redirect:index.jsp?error=yes";
             }
         } else {
-            return "redirect:startindex.jsp?error=yes";
+            return "redirect:index.jsp?error=yes";
         }
 
     }
