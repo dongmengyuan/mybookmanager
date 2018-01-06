@@ -4,10 +4,12 @@ import bookmanager.dao.dbservice.BookInfoService;
 import bookmanager.dao.rowmapper.JdbcRowMapper;
 import bookmanager.model.po.BookInfoPO;
 import bookmanager.model.po.PagePO;
+import bookmanager.model.po.UserPO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcOperations;
 import org.springframework.stereotype.Repository;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -30,6 +32,10 @@ public class BookInfoServiceImpl implements BookInfoService {
     private final static String GET_ONE_PAGE_BOOKINFO = "SELECT * FROM book_info LIMIT ? , ?";
     private final static String GET_ONE_PAGE_BOOKINFO_UID = "SELECT pk_id FROM book_info LIMIT ?, ?";
 
+
+    private final static String GET_BORROWBOOK_BY_USER = "SELECT * FROM book_info WHERE pk_id IN (SELECT book_info_pk_id FROM borrow_info WHERE cs_user_uid = ?)";
+    private final static String GET_RETURNBOOK_BY_USER = "SELECT * FROM book_info WHERE pk_id IN (SELECT book_info_pk_id FROM return_info WHERE cs_user_uid = ?)";
+    private final static String DELETE_BOOK_BY_BOOKINFOPO = "DELETE FROM book_info WHERE pk_id = ? AND ugk_uid = ?";
 
     @Autowired
     public BookInfoServiceImpl(JdbcOperations jdbcOperations) {
@@ -67,4 +73,23 @@ public class BookInfoServiceImpl implements BookInfoService {
         return jdbcOperations.queryForList(GET_ONE_PAGE_BOOKINFO_UID,
                 Integer.class, pagePO.getBeginIndex(), pagePO.getEveryPage());
     }
+
+
+
+
+
+
+    public List<BookInfoPO> getBorrowBookByUser(int uid) {
+        return jdbcOperations.query(GET_BORROWBOOK_BY_USER,JdbcRowMapper.newInstance(BookInfoPO.class),uid);
+    }
+
+    public List<BookInfoPO> getReturnBookByUser(int uid) {
+        return jdbcOperations.query(GET_RETURNBOOK_BY_USER,JdbcRowMapper.newInstance(BookInfoPO.class),uid);
+    }
+
+    public void deleteBook(BookInfoPO bookInfoPO) {
+        jdbcOperations.update(DELETE_BOOK_BY_BOOKINFOPO,bookInfoPO.getPkId(),bookInfoPO.getUgkUid());
+    }
+
+
 }

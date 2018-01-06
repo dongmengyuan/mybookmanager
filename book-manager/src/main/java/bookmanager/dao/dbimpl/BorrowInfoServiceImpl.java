@@ -24,6 +24,7 @@ public class BorrowInfoServiceImpl implements BorrowInfoService {
     }
 
     public void save(BorrowInfoPO borrowInfo) {
+
     }
 
 }

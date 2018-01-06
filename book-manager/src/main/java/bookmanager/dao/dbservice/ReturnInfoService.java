@@ -7,5 +7,6 @@ import bookmanager.model.po.ReturnInfoPO;
  */
 public interface ReturnInfoService {
     //向归还表中插入一条信息
-    void save(ReturnInfoPO returnInfo);
+    //void save(ReturnInfoPO returnInfo);
+    void returnBookByUserAndPk_id(ReturnInfoPO returnInfoPO);
 }

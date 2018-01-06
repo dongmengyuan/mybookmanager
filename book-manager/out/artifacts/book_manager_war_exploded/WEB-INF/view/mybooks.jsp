@@ -1,8 +1,9 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%--
   Created by IntelliJ IDEA.
   User: dongmengyuan
-  Date: 17-12-28
-  Time: 下午5:48
+  Date: 18-1-3
+  Time: 下午6:26
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
@@ -20,6 +21,7 @@
     <link href="/css/index1.css" rel="stylesheet">
     <link href="/css/mybooks.css" rel="stylesheet">
 </head>
+
 <body>
 <header>
     <div id="hea">
@@ -28,7 +30,7 @@
         <div id="index1_input">
             <input type="text" placeholder="搜索书名/作者/归属者">
             <button class="btn btn-link">提交</button>
-            <a href="/mybook" id="head_in"><i class="fa fa-file-text fa-fw"></i>我的书籍</a>
+            <a href="/mybook/getBook" id="head_in"><i class="fa fa-file-text fa-fw"></i>我的书籍</a>
             <a href="pushbook.html"><i class="fa fa-tags fa-fw"></i>上传数据</a>
         </div>
         <a id="index1_sign" href="index.jsp">退出登录</a>
@@ -40,77 +42,45 @@
         <a>所借阅的书</a>
     </div>
     <div id="push">
-        <div class="rows books_push" >
-            <div class="col-xs-12 col-md-2 book_img">
-                <img src="/img/book0.jpeg">
+        <c:forEach items="${MyReturnBook}" var="returnbook">
+            <div class="rows books_push">
+                <div class="col-xs-12 col-md-2 book_img">
+                    <img src="/img/book0.jpeg">
+                </div>
+                <div class="book_info col-xs-12 col-md-8">
+                    <p>《${returnbook.key.ugkName}》-----${returnbook.key.author}</p>
+                    <p>${returnbook.key.describ}</p>
+                    <p><span><i class="fa fa-user"></i>${returnbook.value}</span>
+                        <span><i class="fa fa-book"></i>被借4次</span>
+                    </p>
+                </div>
+                <div class="col-xs-12 col-md-2">
+                    <button class="btn" onclick="deleteBookByUserAndPk_id(${uid},${returnbook.key.pkId})">下架图书</button>
+                    <button class="btn modify">修改信息</button>
+                </div>
+                <div style="clear:both"></div>
             </div>
-            <div class="book_info col-xs-12 col-md-8">
-                <p>《计算机操作系统》-----黄水松</p>
-                <p>计算机专业必读计算机专业必读计算机专业必读计算机专业必读计算机专业必读计算机专业必读计算机专业必读</p>
-                <p><span><i class="fa fa-user"></i>祝一迪</span>
-                    <span><i class="fa fa-book"></i>被借4次</span>
-                </p>
-            </div>
-            <div class="col-xs-12 col-md-2">
-                <button class="btn">下架图书</button>
-                <button class="btn modify">修改信息</button>
-            </div>
-
-            <div style="clear:both"></div>
-        </div>
-        <div class="rows books_push">
-            <div class="col-xs-12 col-md-2 book_img">
-                <img src="/img/book0.jpeg">
-            </div>
-            <div class="book_info col-xs-12 col-md-8">
-                <p>《计算机操作系统》-----黄水松</p>
-                <p>计算机专业必读计算机专业必读计算机专业必读计算机专业必读计算机专业必读计算机专业必读计算机专业必读</p>
-                <p><span><i class="fa fa-user"></i>祝一迪</span>
-                    <span><i class="fa fa-book"></i>被借4次</span>
-                </p>
-            </div>
-            <div class="col-xs-12 col-md-2">
-                <button class="btn">下架图书</button>
-                <button class="btn modify">修改信息</button>
-            </div>
-            <div style="clear:both"></div>
-        </div>
+        </c:forEach>
     </div>
     <div id="borrow">
-        <div class="rows">
-            <div class="col-xs-12 col-md-2 book_img">
-                <img src="/img/book0.jpeg">
+        <c:forEach items="${MyBorrowBook}" var="book">
+            <div class="rows">
+                <div class="col-xs-12 col-md-2 book_img">
+                    <img src="/img/book0.jpeg">
+                </div>
+                <div class="book_info col-xs-12 col-md-8">
+                    <p>《${book.key.ugkName}》-----${book.key.author}</p>
+                    <p>${book.key.describ}</p>
+                    <p><span><i class="fa fa-user"></i>${book.value}</span>
+                        <span><i class="fa fa-book"></i>被借4次</span>
+                    </p>
+                </div>
+                <div class="col-xs-12 col-md-2">
+                    <button class="btn" onclick="ReturnBookByUserAndPkid(${uid},${book.key.pkId})">归还图书</button>
+                </div>
+                <div style="clear:both"></div>
             </div>
-            <div class="book_info col-xs-12 col-md-8">
-                <p>《计算机操作系统》-----黄水松</p>
-                <p>计算机专业必读计算机专业必读计算机专业必读计算机专业必读计算机专业必读计算机专业必读计算机专业必读</p>
-                <p><span><i class="fa fa-user"></i>祝一迪</span>
-                    <span><i class="fa fa-book"></i>被借4次</span>
-                </p>
-            </div>
-            <div class="col-xs-12 col-md-2">
-                <button class="btn">归还图书</button>
-
-            </div>
-            <div style="clear:both"></div>
-        </div>
-        <div class="rows">
-            <div class="col-xs-12 col-md-2 book_img">
-                <img src="/img/book0.jpeg">
-            </div>
-            <div class="book_info col-xs-12 col-md-8">
-                <p>《计算机操作系统》-----黄水松</p>
-                <p>计算机专业必读计算机专业必读计算机专业必读计算机专业必读计算机专业必读计算机专业必读计算机专业必读</p>
-                <p><span><i class="fa fa-user"></i>祝一迪</span>
-                    <span><i class="fa fa-book"></i>被借4次</span>
-                </p>
-            </div>
-            <div class="col-xs-12 col-md-2">
-                <button class="btn">归还图书</button>
-
-            </div>
-            <div style="clear:both"></div>
-        </div>
+        </c:forEach>
     </div>
 </div>
 <div id="mask"></div>
@@ -158,10 +128,24 @@
         <p>All Rights Reserved</p>
     </div>
 </footer>
+
+</body>
 <script type="text/javascript" src="/js/jquery.min.js"></script>
 <script type="text/javascript" src="/js/bootstrap.min.js"></script>
 <script type="text/javascript" src="/js/canvas1.js"></script>
 <script type="text/javascript" src="/js/index.js"></script>
 <script type="text/javascript" src="/js/mybooks.js"></script>
-</body>
+<script type="text/javascript">
+    function ReturnBookByUserAndPkid(uid,pk_id) {
+        $.post("/mybook/returnBook",{"csUserId":uid,"bookInfoPkId":pk_id},function(data){
+            window.location.reload();
+        });
+    }
+    
+    function deleteBookByUserAndPk_id(uid,pk_id) {
+        $.post("/mybook/deleteBook",{"ugkUid":uid,"pkId":pk_id},function(data){
+            window.location.reload();
+        });
+    }
+</script>
 </html>

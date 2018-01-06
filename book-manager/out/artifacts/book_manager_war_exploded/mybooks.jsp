@@ -28,28 +28,13 @@
         <div id="index1_input">
             <input type="text" placeholder="搜索书名/作者/归属者">
             <button class="btn btn-link">提交</button>
-            <a href="mybooks.html" id="head_in"><i class="fa fa-file-text fa-fw"></i>我的书籍</a>
+            <a href="/mybook" id="head_in"><i class="fa fa-file-text fa-fw"></i>我的书籍</a>
             <a href="pushbook.html"><i class="fa fa-tags fa-fw"></i>上传数据</a>
         </div>
         <a id="index1_sign" href="index.jsp">退出登录</a>
     </div>
 </header>
 <div id="main">
-    <div id="tag">
-        <a>编程语言</a>
-        <a>数据结构与算法</a>
-        <a>软件工程</a>
-        <a>数据库</a>
-        <a>操作系统</a>
-        <a>计算机网络</a>
-        <a>web后台</a>
-        <a>前端</a>
-        <a>人工智能</a>
-        <a>大数据与云计算</a>
-        <a>底层分析与开发工具</a>
-        <a>教科书</a>
-        <a id="tag_all" href="alltags.html">全部标签</a>
-    </div>
     <div id="head2">
         <a>所上传的书</a>
         <a>所借阅的书</a>
@@ -70,6 +55,7 @@
                 <button class="btn">下架图书</button>
                 <button class="btn modify">修改信息</button>
             </div>
+
             <div style="clear:both"></div>
         </div>
         <div class="rows books_push">

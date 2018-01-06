@@ -2,6 +2,7 @@ package bookmanager.dao.dbservice;
 
 import bookmanager.model.po.BookInfoPO;
 import bookmanager.model.po.PagePO;
+import bookmanager.model.po.UserPO;
 
 import java.util.List;
 import java.util.Map;
@@ -27,4 +28,12 @@ public interface BookInfoService {
 
     // 得到一页的图书信息的uid
     List<Integer> getBookInfoUidByPage(PagePO pagePO);
+
+
+    List<BookInfoPO> getBorrowBookByUser(int uid);
+
+    List<BookInfoPO> getReturnBookByUser(int uid);
+
+
+    void deleteBook(BookInfoPO bookInfoPO);
 }
