@@ -17,6 +17,13 @@
           <element id="library" level="project" name="Spring MVC-4.3.13.RELEASE" />
           <element id="library" level="project" name="Maven: mysql:mysql-connector-java:5.1.38" />
           <element id="library" level="project" name="Maven: javax.servlet:jstl:1.2" />
+          <element id="library" level="project" name="Maven: com.fasterxml.jackson.core:jackson-annotations:2.6.1" />
+          <element id="library" level="project" name="Maven: com.fasterxml.jackson.core:jackson-core:2.6.1" />
+          <element id="library" level="project" name="Maven: com.fasterxml.jackson.core:jackson-databind:2.6.1" />
+          <element id="library" level="project" name="Maven: com.google.code.gson:gson:2.8.2" />
+          <element id="library" level="project" name="Maven: org.codehaus.jackson:jackson-core-asl:1.9.13" />
+          <element id="library" level="project" name="Maven: org.codehaus.jackson:jackson-mapper-asl:1.9.13" />
+          <element id="library" level="project" name="Maven: org.json:json:20140107" />
         </element>
       </element>
     </root>

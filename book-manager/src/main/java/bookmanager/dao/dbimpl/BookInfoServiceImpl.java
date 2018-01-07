@@ -34,8 +34,15 @@ public class BookInfoServiceImpl implements BookInfoService {
 
 
     private final static String GET_BORROWBOOK_BY_USER = "SELECT * FROM book_info WHERE pk_id IN (SELECT book_info_pk_id FROM borrow_info WHERE cs_user_uid = ?)";
-    private final static String GET_RETURNBOOK_BY_USER = "SELECT * FROM book_info WHERE pk_id IN (SELECT book_info_pk_id FROM return_info WHERE cs_user_uid = ?)";
+    private final static String GET_UPLOAD_BOOK_BY_USER = "SELECT * FROM book_info WHERE ugk_uid = ?";
     private final static String DELETE_BOOK_BY_BOOKINFOPO = "DELETE FROM book_info WHERE pk_id = ? AND ugk_uid = ?";
+    private final static String GET_PARENT_BOOK_CLASS_BY_PK_ID = "SELECT name FROM book_label WHERE pk_id IN (SELECT parent_id FROM book_label WHERE pk_id IN (SELECT label_tree_pk_id FROM book_relation_label WHERE book_info_pk_id = ?))";
+
+    private final static String GET_CHILD_BOOK_CLASS_BY_PK_ID = "SELECT name FROM book_label WHERE pk_id IN (SELECT label_tree_pk_id FROM book_relation_label WHERE book_info_pk_id = ?)";
+
+    private final static String GET_BOOK_BY_PKID = "SELECT * FROM book_info WHERE pk_id = ?";
+
+    private final static String UPDATE_BOOK_BY_ID = "UPDATE book_info SET ugk_name = ?,author = ?,amount = ?,describ = ? WHERE pk_id = ?";
 
     @Autowired
     public BookInfoServiceImpl(JdbcOperations jdbcOperations) {
@@ -83,12 +90,32 @@ public class BookInfoServiceImpl implements BookInfoService {
         return jdbcOperations.query(GET_BORROWBOOK_BY_USER,JdbcRowMapper.newInstance(BookInfoPO.class),uid);
     }
 
-    public List<BookInfoPO> getReturnBookByUser(int uid) {
-        return jdbcOperations.query(GET_RETURNBOOK_BY_USER,JdbcRowMapper.newInstance(BookInfoPO.class),uid);
+    public List<BookInfoPO> getUploadBookByUser(int uid) {
+        return jdbcOperations.query(GET_UPLOAD_BOOK_BY_USER,JdbcRowMapper.newInstance(BookInfoPO.class),uid);
     }
 
     public void deleteBook(BookInfoPO bookInfoPO) {
         jdbcOperations.update(DELETE_BOOK_BY_BOOKINFOPO,bookInfoPO.getPkId(),bookInfoPO.getUgkUid());
+    }
+
+    public BookInfoPO getBookByPk_id(Integer bookInfoPkId) {
+        List<BookInfoPO> query = jdbcOperations.query(GET_BOOK_BY_PKID, JdbcRowMapper.newInstance(BookInfoPO.class), bookInfoPkId);
+        return query.get(0);
+    }
+
+
+
+
+    public String getParentBookLabel(Integer pk_id) {
+        return jdbcOperations.queryForObject(GET_PARENT_BOOK_CLASS_BY_PK_ID,String.class,pk_id);
+    }
+
+    public String getChildBookLabel(Integer pk_id) {
+        return jdbcOperations.queryForObject(GET_CHILD_BOOK_CLASS_BY_PK_ID,String.class,pk_id);
+    }
+
+    public void updateBook(BookInfoPO bookInfoPO) {
+        jdbcOperations.update(UPDATE_BOOK_BY_ID,bookInfoPO.getUgkName(),bookInfoPO.getAuthor(),bookInfoPO.getAmount(),bookInfoPO.getDescrib(),bookInfoPO.getPkId());
     }
 
 

@@ -51,19 +51,19 @@
                     <p>《${returnbook.key.ugkName}》-----${returnbook.key.author}</p>
                     <p>${returnbook.key.describ}</p>
                     <p><span><i class="fa fa-user"></i>${returnbook.value}</span>
-                        <span><i class="fa fa-book"></i>被借4次</span>
+                        <span><i class="fa fa-book"></i>被借${returnBorrowCount.get(returnbook.key)}次</span>
                     </p>
                 </div>
                 <div class="col-xs-12 col-md-2">
                     <button class="btn" onclick="deleteBookByUserAndPk_id(${uid},${returnbook.key.pkId})">下架图书</button>
-                    <button class="btn modify">修改信息</button>
+                    <button class="btn modify" onfocus="editBook(${returnbook.key.pkId})">修改信息</button>
                 </div>
                 <div style="clear:both"></div>
             </div>
         </c:forEach>
     </div>
     <div id="borrow">
-        <c:forEach items="${MyBorrowBook}" var="book">
+        <c:forEach items="${MyBorrowBook}" var="book" varStatus="Count">
             <div class="rows">
                 <div class="col-xs-12 col-md-2 book_img">
                     <img src="/img/book0.jpeg">
@@ -72,7 +72,7 @@
                     <p>《${book.key.ugkName}》-----${book.key.author}</p>
                     <p>${book.key.describ}</p>
                     <p><span><i class="fa fa-user"></i>${book.value}</span>
-                        <span><i class="fa fa-book"></i>被借4次</span>
+                        <span><i class="fa fa-book"></i>被借${borrowCount.get(book.key)}次</span>
                     </p>
                 </div>
                 <div class="col-xs-12 col-md-2">
@@ -86,12 +86,13 @@
 <div id="mask"></div>
 <form id="box">
     <h3>修改图书信息<img src="/img/close_def.png" id="close"></h3>
-    <p>书名：<input type="text"></p>
-    <p>作者：<input type="text"></p>
-    <p>数量：<input type="text"></p>
-    <p>分类：<input type="text"><input type="text"></p>
-    <p>描述：<textarea cols="30" rows="2"></textarea></p>
-    <button>登录</button>
+    <input type="hidden" id = "bookpkid" name="pkId">
+    <p>书名：<input type="text" id="bookname" name="ugkName"></p>
+    <p>作者：<input type="text" id="author" name="author"></p>
+    <p>数量：<input type="text" id="count" name="amount"></p>
+    <p>分类：<input type="text" id="class1"><input type="text" id="class2"></p>
+    <p>描述：<textarea cols="30" rows="2" id="desc" name="describ"></textarea></p>
+    <button onclick="updateBook()">更新</button>
 </form>
 <footer>
     <div class="rows">
@@ -146,6 +147,31 @@
         $.post("/mybook/deleteBook",{"ugkUid":uid,"pkId":pk_id},function(data){
             window.location.reload();
         });
+    }
+
+    function editBook(pk_id) {
+        $.ajax({
+            type:"get",
+            url:"/mybook/editBook",
+            data:{"pk_id":pk_id},
+            success:function(data) {
+                //alert(data);
+                $("#bookpkid").val(data.bookInfoPO.pkId);
+                $("#bookname").val(data.bookInfoPO.ugkName);
+                $("#author").val(data.bookInfoPO.author);
+                $("#count").val(data.bookInfoPO.amount);
+                $("#class1").val(data.parentBookClass);
+                $("#class2").val(data.childBookClass);
+                $("#desc").val(data.bookInfoPO.describ);
+            }
+        });
+    }
+
+    function updateBook() {
+        $.post("/mybook/updateBook",$("#box").serialize(),function(data){
+            window.location.reload();
+        });
+
     }
 </script>
 </html>

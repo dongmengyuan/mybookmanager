@@ -40,7 +40,8 @@
                 <c:forEach items="${books}" var="book">
                     <div class="rows">
                         <div class="col-xs-12 col-md-3 book_img">
-                            <img src="/img/book0.jpeg">
+                            //避免url明显显示详情
+                            <a href="/showbook/showBook/${book.key.pkId}/${book.key.ugkUid}"><img src="/img/book0.jpeg"></a>
                         </div>
                         <div class="book_info col-xs-12 col-md-9">
                             <p>《${book.key.ugkName}》----- ${book.key.author}</p>
@@ -415,5 +416,12 @@
         }
 
     </script>
-
+    <script type="text/javascript">
+        function showBookInfo(pk_id) {
+            $.post("/mybook/showBook",{"bookInfoPkId":pk_id},function(data){
+                //window.location.reload();
+                //window.location.href=data+".jsp";
+            });
+        }
+    </script>
 </html>

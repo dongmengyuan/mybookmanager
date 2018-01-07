@@ -8,4 +8,8 @@ import bookmanager.model.po.BorrowInfoPO;
 public interface BorrowInfoService {
     //向借阅表中插入一条信息
     void save(BorrowInfoPO borrowInfo);
+
+    BorrowInfoPO checkBookisBorrow(BorrowInfoPO borrowInfoPO);
+
+    int getBorrowCount(Integer bookInfoPkId);
 }

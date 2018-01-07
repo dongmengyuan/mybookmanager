@@ -43,25 +43,14 @@
             <div class="col-xs-12 col-md-6">
                 <img src="img/book0.jpeg">
             </div>
-            <%--<div class="col-xs-12 col-md-6">--%>
-                <%--<p>书名：<span>《计算机操作系统》</span></p>--%>
-                <%--<p>作者：<span>黄水松</span></p>--%>
-                <%--<p>归属者：<span>祝一迪</span></p>--%>
-                <%--<p>被借<span>0</span>次</p>--%>
-                <%--<p>描述：<span>书很好书很好书很好书很好书很好书很好书很好书很好书很好书很好书很好书很好书很好书很好书</span></p>--%>
-                <%--<p><button class="btn btn-primary">点我借阅</button></p>--%>
-            <%--</div>--%>
-
-            <%--从后台拿到--%>
             <div class="col-xs-12 col-md-6">
-                <p>书名：<span>《计算机操作系统》</span></p>
-                <p>作者：<span>黄水松</span></p>
-                <p>归属者：<span>祝一迪</span></p>
+                <p>书名：<span>《${book.pkId}》</span></p>
+                <p>作者：<span>${book.author}</span></p>
+                <p>归属者：<span>${book.ugkName}</span></p>
                 <p>被借<span>0</span>次</p>
-                <p>描述：<span>书很好书很好书很好书很好书很好书很好书很好书很好书很好书很好书很好书很好书很好书很好书</span></p>
-                <p><button class="btn btn-primary">点我借阅</button></p>
+                <p>描述：<span>${book.describ}</span></p>
+                <p><button class="btn btn-primary" onclick="borrowBook(${uid},${returnbook.key.pkId}>点我借阅</button></p>
             </div>
-
             <div style="clear:both"></div>
         </div>
     </div>
@@ -76,24 +65,7 @@
             </div>
 
         </div>
-        <div>
-            <img src="img/book0.jpeg">
-            <div>
-                <p>祝一迪</p>
-                <p>书很好</p>
-                <p>2017-12-01 00:53</p>
-            </div>
 
-        </div>
-        <div>
-            <img src="img/weixin.jpg">
-            <div>
-                <p>祝一迪</p>
-                <p>书很好</p>
-                <p>2017-12-01 00:53</p>
-            </div>
-
-        </div>
         <div>
             <img src="img/index_head.png">
             <div>
@@ -103,15 +75,7 @@
             </div>
 
         </div>
-        <div>
-            <img src="img/index_head.png">
-            <div>
-                <p>祝一迪</p>
-                <p>书很好</p>
-                <p>2017-12-01 00:53</p>
-            </div>
 
-        </div>
         <div id="index_pingination">
             <ul class="pagination">
                 <li><a href="#">&laquo;</a></li>
@@ -171,5 +135,15 @@
 <script type="text/javascript" src="js/bootstrap.min.js"></script>
 <script type="text/javascript" src="js/canvas1.js"></script>
 <script type="text/javascript" src="js/index.js"></script>
+
+<script type="text/javascript">
+
+    function borrowBook(uid,pk_id) {
+        $.post("/showbook/borrowBook",{"BorrowInfoPO":pk_id,"csUserId":uid},function(data){
+            window.location.reload();
+        });
+    }
+</script>
+
 </body>
 </html>

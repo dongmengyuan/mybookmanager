@@ -32,8 +32,16 @@ public interface BookInfoService {
 
     List<BookInfoPO> getBorrowBookByUser(int uid);
 
-    List<BookInfoPO> getReturnBookByUser(int uid);
+    List<BookInfoPO> getUploadBookByUser(int uid);
 
 
     void deleteBook(BookInfoPO bookInfoPO);
+
+    BookInfoPO getBookByPk_id(Integer bookInfoPkId);
+
+    String getParentBookLabel(Integer pk_id);
+
+    String getChildBookLabel(Integer pk_id);
+
+    void updateBook(BookInfoPO bookInfoPO);
 }

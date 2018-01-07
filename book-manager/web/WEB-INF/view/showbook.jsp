@@ -1,11 +1,13 @@
 <%--
   Created by IntelliJ IDEA.
   User: dongmengyuan
-  Date: 18-1-3
-  Time: 下午6:27
+  Date: 18-1-6
+  Time: 下午1:54
   To change this template use File | Settings | File Templates.
 --%>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="clear" uri="http://www.springframework.org/tags/form" %>
 <html>
 <head>
     <meta charset="UTF-8">
@@ -14,17 +16,16 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta name="HandleFriendly" content="true">
     <!--font-awesome矢量图标-->
-    <link href="font-awesome-4.7.0/css/font-awesome.min.css" rel="stylesheet">
-    <link href="css/bootstrap.min.css" rel="stylesheet">
-    <link href="css/index.css" rel="stylesheet">
-    <link href="css/index1.css" rel="stylesheet">
-    <link href="css/showbook.css" rel="stylesheet">
+    <link href="/font-awesome-4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <link href="/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/css/index.css" rel="stylesheet">
+    <link href="/css/index1.css" rel="stylesheet">
+    <link href="/css/showbook.css" rel="stylesheet">
 </head>
-
 <body>
 <header>
     <div id="hea">
-        <img id="index_head" src="img/index_head.png" />
+        <img id="index_head" src="/img/index_head.png" />
         <a id="head" href="main.jsp">XiyouLinux Group 图书借阅</a>
         <div id="index1_input">
             <input type="text" placeholder="搜索书名/作者/归属者">
@@ -40,67 +41,35 @@
     </div>
     <div id="con">
         <div class="rows">
-            <div class="col-xs-12 col-md-6">
-                <img src="img/book0.jpeg">
-            </div>
-            <div class="col-xs-12 col-md-6">
-                <p>书名：<span>《计算机操作系统》</span></p>
-                <p>作者：<span>黄水松</span></p>
-                <p>归属者：<span>祝一迪</span></p>
-                <p>被借<span>0</span>次</p>
-                <p>描述：<span>书很好书很好书很好书很好书很好书很好书很好书很好书很好书很好书很好书很好书很好书很好书</span></p>
-                <p><button class="btn btn-primary">点我借阅</button></p>
-            </div>
-            <div style="clear:both"></div>
+            <c:forEach items="${bookMap}" var="books" >
+                <div class="col-xs-12 col-md-6">
+                    <img src="/img/book0.jpeg">
+                </div>
+                <div class="col-xs-12 col-md-6">
+                    <p>书名：<span>《${books.key.ugkName}》</span></p>
+                    <p>作者：<span>${books.key.author}</span></p>
+                    <p>归属者：<span>${books.value}</span></p>
+                    <p>被借<span>${borrowCount}</span>次</p>
+                    <p>描述：<span>${books.key.describ}</span></p>
+                    <p><button class="btn btn-primary" onclick="borrowBook(${books.key.pkId},${uid})">点我借阅</button></p>
+                </div>
+                <div style="clear:both"></div>
+            </c:forEach>
         </div>
     </div>
     <div id="talk">
-        <p>评论<span>(5)</span></p>
-        <div>
-            <img src="img/index_head.png">
+        <p>评论<span>(${contentCount})</span></p>
+        <c:forEach items="${content}" var="content">
             <div>
-                <p>祝一迪</p>
-                <p>书很好书很好书很好书很好书很好书很好书很好书很好书很好书很好书很好书很好书很好书很好书很好书很好书很好书很好书很好书很好书很好书很好书很好书很好书很好书很好书很好书很好书很好书很好书很好书很好书很好书很好书很好书很好书很好书很好书很好书很好书很好书很好书很好书很好书很好书很好书很好书很好书很好书很好</p>
-                <p>2017-12-01 00:53</p>
-            </div>
+                <img src="/img/index_head.png">
+                <div>
+                    <p>${content.value}</p>
+                    <p>${content.key.content}</p>
+                    <p>${content.key.commentDatetime}</p>
+                </div>
 
-        </div>
-        <div>
-            <img src="img/book0.jpeg">
-            <div>
-                <p>祝一迪</p>
-                <p>书很好</p>
-                <p>2017-12-01 00:53</p>
             </div>
-
-        </div>
-        <div>
-            <img src="img/weixin.jpg">
-            <div>
-                <p>祝一迪</p>
-                <p>书很好</p>
-                <p>2017-12-01 00:53</p>
-            </div>
-
-        </div>
-        <div>
-            <img src="img/index_head.png">
-            <div>
-                <p>祝一迪</p>
-                <p>书很好</p>
-                <p>2017-12-01 00:53</p>
-            </div>
-
-        </div>
-        <div>
-            <img src="img/index_head.png">
-            <div>
-                <p>祝一迪</p>
-                <p>书很好</p>
-                <p>2017-12-01 00:53</p>
-            </div>
-
-        </div>
+        </c:forEach>
         <div id="index_pingination">
             <ul class="pagination">
                 <li><a href="#">&laquo;</a></li>
@@ -116,8 +85,8 @@
     </div>
     <div id="italk">
         <p>我要评论</p>
-        <textarea></textarea>
-        <button class="btn btn-success">提交评论</button>
+        <textarea id="content"></textarea>
+        <button class="btn btn-success" onclick="submitContent(${book.pkId})">提交评论</button>
     </div>
 </div>
 
@@ -156,9 +125,46 @@
         <p>All Rights Reserved</p>
     </div>
 </footer>
-<script type="text/javascript" src="js/jquery.min.js"></script>
-<script type="text/javascript" src="js/bootstrap.min.js"></script>
-<script type="text/javascript" src="js/canvas1.js"></script>
-<script type="text/javascript" src="js/index.js"></script>
+<script type="text/javascript" src="/js/jquery.min.js"></script>
+<script type="text/javascript" src="/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="/js/canvas1.js"></script>
+<script type="text/javascript" src="/js/index.js"></script>
+<script type="text/javascript">
+
+    function borrowBook(pk_id,uid) {
+        $.post("/showbook/borrowBook",{"bookInfoPkId":pk_id,"csUserId":uid},function(data){
+            if(data.length==7){
+                alert("您已借阅过该本书");
+            }else if(data.length==4){
+                alert("借阅成功");
+                window.location.href="/mybook/getBook";
+            }else{
+                alert("请先登录后操作");
+                window.location.href="/bookmanager";
+            }
+        });
+    }
+
+    function submitContent(pk_id) {
+        var uid = "${uid}";
+        var reg = /^(\s)*$/;
+
+
+        var s = $("#content").val();
+
+
+        if(uid==""){
+            alert("您未登录");
+        }else if(reg.test(s)){
+            alert("评论格式非法！！！！");
+        }else{
+            $.post("/showbook/submitContent",{"csUserId":uid,"bookInfoPkId":pk_id,"content":$("#content").val()},function(data){
+                alert("评论提交成功");
+                window.location.reload();
+            });
+        }
+
+    }
+</script>
 </body>
 </html>
